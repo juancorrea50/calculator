@@ -1,21 +1,37 @@
-let num1;
-let num2;
-
 const operatorArray = ['+','-','*','/'];
-const numberChoice = [];
+const numberChoice = [0];
 
 const buttons = document.querySelector('button');
-const buttonsArray = Array.from(document.querySelectorAll('button'));
-console.table(buttonsArray);
+const displayInput = document.getElementById('result');
+
 
 
 function display(value){
-    document.getElementById('result').value += value;
-    numberChoice.push(value);
-    console.log(numberChoice);
+    
+        //Repeated values do not show up (1 bug: Only covers one  extra click of the same operator)
+        if(value == '+' && numberChoice[(numberChoice.length-1)] == '+'|| value == '-' && numberChoice[(numberChoice.length-1)] == '-' 
+        || value == '*' && numberChoice[(numberChoice.length-1)] == '*' || value == '/' && numberChoice[(numberChoice.length-1)] == '/'
+        || value == '.' && numberChoice[(numberChoice.length-1)] == '.'){
+            //Doesn't add the selection to the displayInput variable and pops the choice from the numberChoice array
+            for(x=0;x<numberChoice.length;x++){
+                if(numberChoice[x]== '+' || numberChoice[x]== '-' || numberChoice[x]== '*' || numberChoice[x]== '/' || numberChoice[x]== '.'){
+                    console.log(displayInput.value);
+                }
+            }
+        } else{
+            //Adds the input to the value to be displayed on the element in the HTML
+            displayInput.value += value;
+
+            numberChoice.push(value);
+            console.log(numberChoice);
+        }
+ 
+
 }
+
+
 function clearDisplay(){
-    document.getElementById('result').value = "";
+    displayInput.value = "";
 }
 
 
