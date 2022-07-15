@@ -1,5 +1,27 @@
 let num1;
 let num2;
+
+const operatorArray = ['+','-','*','/'];
+const numberChoice = [];
+
+const buttons = document.querySelector('button');
+const buttonsArray = Array.from(document.querySelectorAll('button'));
+console.table(buttonsArray);
+
+
+function display(value){
+    document.getElementById('result').value += value;
+    numberChoice.push(value);
+    console.log(numberChoice);
+}
+function clearDisplay(){
+    document.getElementById('result').value = "";
+}
+
+
+
+
+
 //Arithmetic functions
 const add = function(num1, num2){
     return num1 + num2;
