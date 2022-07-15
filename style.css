@@ -10,15 +10,25 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 200px;
-    width: 200px;
+    height: 250px;
+    width: 250px;
     flex-wrap: wrap;
 }
+.display-container{
+    display:flex;
+    justify-content: center;
+    width: 240px;
+
+}
+.display{
+    width: auto;
+    height: auto;
+}
 button{
-    height:50px;
-    width: 50px;
+    height:60px;
+    width: 60px;
 }
 
 .zero{
-    width:100px;
+    width:120px;
 }
