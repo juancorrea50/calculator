@@ -6,17 +6,20 @@ const numberChoice = [];
 const displayInput = document.getElementById('result');
 const buttonSwitch = document.getElementsByClassName('op-button');
 const decimalButton = document.getElementById('decimal-button');
+const operateButton = document.getElementById('operate');
 
+//Initialize the operator buttons and decimal button to disabled
+decimalButton.disabled = true;
+operateButton.disabled = true;
+for(x=0;x<buttonSwitch.length;x++){
+    buttonSwitch[x].disabled = true;
+}
 
-
+//Display function
 function display(value){
-        //Disable decimal button until an operator is pressed
-        if(value == '.'){
-            decimalButton.disabled = true;
-        }
-
         //Disabled the buttons after hitting one operator
         if(value == '+' || value == '-' || value == '*' || value == '/'){
+            operateButton.disabled = false;
             decimalButton.disabled = false;
             for(x=0;x<buttonSwitch.length;x++){
                 buttonSwitch[x].disabled = true;
@@ -30,35 +33,42 @@ function display(value){
             console.log(numberChoice)
             console.log(operatorChoice);
         } else {
-            
+            for(x=0;x<buttonSwitch.length;x++){
+                buttonSwitch[x].disabled = false;
+            }
+            decimalButton.disabled = false;
+
             numberChoice.push(value);
             console.log(numberChoice);
 
         }
-
-        
+        //Scan numberChoice Array to see if there is a decimal and if so disable the decimal button
+        for(x=0;x<numberChoice.length;x++){
+            if(numberChoice[x] == '.'){
+                console.log('decimal disabled')
+                decimalButton.disabled = true;
+            }
+        }
 
         //Adds the input to the value to be displayed on the element in the HTML
         displayInput.value += value;
 
-
- 
-
 }
 
 
-
+//Clear function
 function clearDisplay(){
     //Clears display and numberChoice Array
     numberChoice.splice(0,numberChoice.length);
     console.log(numberChoice);
     displayInput.value = "";
-    decimalButton.disabled = false;
-
-    //Re enables operator buttons
+    //Make all non-numbered buttons disabled
+    operateButton.disabled = true;
+    decimalButton.disabled = true;
     for(x=0;x<buttonSwitch.length;x++){
-        buttonSwitch[x].disabled = false;
+        buttonSwitch[x].disabled = true;
     }
+
 
 }
 
@@ -72,7 +82,9 @@ const add = function(num1, num2){
     //If one num has a decimal point, convert both values to float
     for(x=0;x<array1.length;x++){
         if(array1[x]== '.' || array2[x] == '.'){
-            return (parseFloat(num1)) + (parseFloat(num2));
+            let sum;
+            sum = (parseFloat(num1)) + (parseFloat(num2));
+            return sum.toFixed(2);
         }
 
     }
@@ -89,7 +101,8 @@ const subtract = function(num1, num2){
     //If one num has a decimal point, convert both values to float
     for(x=0;x<array1.length;x++){
         if(array1[x]== '.' || array2[x] == '.'){
-            return (parseFloat(num1)) - (parseFloat(num2));
+            let dif = (parseFloat(num1)) - (parseFloat(num2));
+            return dif.toFixed(2);
         }
 
     }
@@ -105,7 +118,8 @@ const multiply = function(num1, num2){
     //If one num has a decimal point, convert both values to float
     for(x=0;x<array1.length;x++){
         if(array1[x]== '.' || array2[x] == '.'){
-            return (parseFloat(num1)) * (parseFloat(num2));
+            let product = (parseFloat(num1)) * (parseFloat(num2));
+            return product.toFixed(2);
         }
 
     }
@@ -124,7 +138,8 @@ const divide = function(num1,num2){
     //If one num has a decimal point, convert both values to float
     for(x=0;x<array1.length;x++){
         if(array1[x]== '.' || array2[x] == '.'){
-            return (parseFloat(num1)) / (parseFloat(num2));
+            let dividend= (parseFloat(num1)) / (parseFloat(num2));
+            return dividend.toFixed(2);
         }
 
     }
@@ -144,17 +159,32 @@ function operate() {
     if(operatorChoice == '+'){
         displayInput.value = add(numberChoice[0], numberChoice[1]);
         finalResult = displayInput.value;
+        numberChoice.splice(0, numberChoice.length, finalResult);
+        console.log(numberChoice);
     } else if(operatorChoice == '-'){
         displayInput.value = subtract(numberChoice[0],numberChoice[1]);
         finalResult = displayInput.value;
+        numberChoice.splice(0, numberChoice.length, finalResult);
+        console.log(numberChoice);
     } else if(operatorChoice == '*'){
         displayInput.value = multiply(numberChoice[0],numberChoice[1]);
         finalResult = displayInput.value;
+        numberChoice.splice(0, numberChoice.length, finalResult);
+        console.log(numberChoice);
     } else if(operatorChoice == '/'){
         displayInput.value =  divide(numberChoice[0],numberChoice[1]);
         finalResult = displayInput.value;
+        numberChoice.splice(0, numberChoice.length, finalResult);
+        console.log(numberChoice);
     }
-    decimalButton.disabled = false;
+    //Allows for the operator buttons to be pressed after operate is resolved. Decimal is still disabled until a number is entered
+    operateButton.disabled = true;
+    decimalButton.disabled = true;
+    for(x=0;x<buttonSwitch.length;x++){
+        buttonSwitch[x].disabled = false;
+    }
+    
+
 };
 
 
